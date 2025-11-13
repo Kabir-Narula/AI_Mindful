@@ -51,6 +51,10 @@ export const agentService = {
     api.post('/agent/followup', { entry_id }),
   getFollowups: (entry_id: number) =>
     api.get(`/agent/followups/${entry_id}`),
+  getCompanionResponse: (entry_id: number) =>
+    api.get(`/agent/companion/${entry_id}`),
+  getPatternAnalysis: () =>
+    api.get('/agent/patterns'),
 }
 
 export const analyticsService = {
