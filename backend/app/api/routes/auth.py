@@ -29,7 +29,7 @@ async def signup(user_data: UserRegister, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(db_user)
     
-    access_token = create_access_token(data={"sub": db_user.id})
+    access_token = create_access_token(data={"sub": str(db_user.id)})
     return {"access_token": access_token, "token_type": "bearer"}
 
 @router.post("/login", response_model=TokenResponse)
@@ -42,7 +42,7 @@ async def login(user_data: UserLogin, db: Session = Depends(get_db)):
             detail="Invalid credentials"
         )
     
-    access_token = create_access_token(data={"sub": db_user.id})
+    access_token = create_access_token(data={"sub": str(db_user.id)})
     return {"access_token": access_token, "token_type": "bearer"}
 
 @router.get("/me", response_model=UserResponse)

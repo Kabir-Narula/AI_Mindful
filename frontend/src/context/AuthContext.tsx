@@ -32,8 +32,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const { access_token } = response.data
       localStorage.setItem('access_token', access_token)
       setToken(access_token)
-      const userResponse = await authService.getMe()
-      setUser(userResponse.data)
+      
+      try {
+        const userResponse = await authService.getMe()
+        setUser(userResponse.data)
+      } catch (err) {
+        console.error('Failed to fetch user profile:', err)
+        setUser({ id: 0, email, username: '', created_at: new Date().toISOString() })
+      }
     } finally {
       setLoading(false)
     }
@@ -46,8 +52,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const { access_token } = response.data
       localStorage.setItem('access_token', access_token)
       setToken(access_token)
-      const userResponse = await authService.getMe()
-      setUser(userResponse.data)
+      
+      try {
+        const userResponse = await authService.getMe()
+        setUser(userResponse.data)
+      } catch (err) {
+        console.error('Failed to fetch user profile:', err)
+        setUser({ id: 0, email, username, created_at: new Date().toISOString() })
+      }
     } finally {
       setLoading(false)
     }
