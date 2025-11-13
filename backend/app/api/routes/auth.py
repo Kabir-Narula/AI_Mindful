@@ -46,8 +46,8 @@ async def login(user_data: UserLogin, db: Session = Depends(get_db)):
     return {"access_token": access_token, "token_type": "bearer"}
 
 @router.get("/me", response_model=UserResponse)
-async def me(current_user: dict = Depends(get_current_user), db: Session = Depends(get_db)):
-    user = db.query(User).filter(User.id == current_user["user_id"]).first()
+async def me(current_user_data: dict = Depends(get_current_user), db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.id == current_user_data["user_id"]).first()
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
     return user
